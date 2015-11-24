@@ -1,0 +1,6 @@
+encoding: UTF-8
+markdown: redcarpet
+highlighter: false 
+permalink: /:year/:title.html
+
+url:
