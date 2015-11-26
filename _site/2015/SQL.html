@@ -11,30 +11,47 @@
     <textarea id="source">
 class: center, middle, inverse
 
-```html
 
-       ####                                                      
-     #########          ######          #######          
-    ###   ####         ###  ####          ###            
-    ##      ##        ###    ###          ##             
-    ##      ##        ##      ###         ##             
-    ###     ##       ###      ###         ##             
-    #######          ###      ###         ##             
-      #######        ##       ###         ##             
-          ####       ###      ###         ##             
-    #      ###       ###  ### ###         ##             
-    #       ##       ###  #######         ##       #              
-    ##     ###       ####   #####         ##      ##             
-    ####  ####        ####  #####         ###    ###              
- ########           ######  ###      ############    
-   
-```
+#SQL那些事儿
+	  
+---
+class: center, middle, inverse
 
-##中的坏味道	  
+
+##没索引不是病，慢起来太要命！
 
 ---
 class: inverse
-##索引
+##索引如何工作
+
+```python
+min_cost = MAX_VALUE
+min_cost_index = NONE
+for(index in all_indexs):
+	if (index match WHERE_CLAUSE):
+		cur_cost = COST(index)
+		if(cur_cost < min_cost):
+			min_cost = cur_cost
+			min_cost_index = index
+```
+####说明：
+```h
+- USE：=, >, >=, <, <=, BETWEEN, like     由左向右匹配
+
+- TYPE:
+	eq_ref      …  unique/primary索引,关联匹配若干行
+	ref         …  unique/primary(前缀)匹配单独行
+	range       …  索引范围扫(BETWEEN、IN、>=、LIKE)
+	index       …  索引全扫描
+	ALL         …  表全扫描
+
+- Cardinality：区分度(预估值)，优化器用来预估cost，选择索引。
+
+```
+
+---
+class: inverse
+##索引实例(1)
 
 ```sql
 
@@ -55,13 +72,77 @@ insert into t1 values (6,6,4,4,’f’);
 ```
 ---
 class: inverse
-```
+##索引实例(2)
+```h
 select * from t1 where b >= 2 and b < 8 
-      and c > 1 and d != 4 and e != ‘a’;
+                      and c > 1 and d != 4 and e != ‘a’;
 ```
-
 ![](/public/img/index.png)
 
+---
+class: inverse
+##索引具体谈
+
+```h
+
+- Range( ftime>20151117 and ftime <20151126)
+  
+  索引最左列
+
+- Order by
+   
+  SQL queries with an order by clause don’t need to sort the
+  result explicitly if the relevant index already delivers
+  the rows in the required order. That means the same index 
+  that is used for the where clause must also cover the 
+  order by clause.
+
+- limit offset
+   
+   过滤更多的行，减少offset
+
+- group by/distinct
+
+   暂无
+
+- index field type
+  详见SQL
+
+```
+
+
+---
+class: center, middle, inverse
+![](/public/img/zhongjian.gif)
+
+---
+class: inverse
+##线上问题跟进
+
+```h
+
+- explain
+
+- profile
+
+- trace
+
+```
+---
+class: inverse
+##SQL中的坏味道
+
+```h
+- SQL循环
+
+- 大表关联
+
+- 相同字段类型不统一
+
+- SQL的归SQL，接口的归接口，需求的归需求。
+
+
+```
 
 ---
 class: center, middle, inverse
