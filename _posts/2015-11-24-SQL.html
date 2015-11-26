@@ -48,6 +48,36 @@ for(index in all_indexs):
 - Cardinality：区分度(预估值)，优化器用来预估cost，选择索引。
 
 ```
+---
+class: inverse
+##索引具体谈
+
+```h
+
+- Range( ftime>20151117 and ftime <20151126)
+  
+  索引最左列
+
+- Order by
+   
+  SQL queries with an order by clause don’t need to sort the
+  result explicitly if the relevant index already delivers
+  the rows in the required order. That means the same index 
+  that is used for the where clause must also cover the 
+  order by clause.
+
+- limit offset
+   
+   过滤更多的行，减少offset
+
+- group by/distinct
+
+   暂无
+
+- index field type
+  详见SQL
+
+```
 
 ---
 class: inverse
@@ -81,42 +111,6 @@ select * from t1 where b >= 2 and b < 8
 
 ---
 class: inverse
-##索引具体谈
-
-```h
-
-- Range( ftime>20151117 and ftime <20151126)
-  
-  索引最左列
-
-- Order by
-   
-  SQL queries with an order by clause don’t need to sort the
-  result explicitly if the relevant index already delivers
-  the rows in the required order. That means the same index 
-  that is used for the where clause must also cover the 
-  order by clause.
-
-- limit offset
-   
-   过滤更多的行，减少offset
-
-- group by/distinct
-
-   暂无
-
-- index field type
-  详见SQL
-
-```
-
-
----
-class: center, middle, inverse
-![]({{ site.url }}/public/img/zhongjian.gif)
-
----
-class: inverse
 ##线上问题跟进
 
 ```h
@@ -128,6 +122,10 @@ class: inverse
 - trace
 
 ```
+---
+class: center, middle, inverse
+![]({{ site.url }}/public/img/zhongjian.gif)
+
 ---
 class: inverse
 ##SQL中的坏味道
