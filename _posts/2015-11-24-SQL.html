@@ -39,9 +39,9 @@ for(index in all_indexs):
 - USE：=, >, >=, <, <=, BETWEEN, like     由左向右匹配
 
 - TYPE:
-	eq_ref      …  unique/primary索引,关联匹配若干行
-	ref         …  unique/primary(前缀)匹配单独行
-	range       …  索引范围扫(BETWEEN、IN、>=、LIKE)
+	eq_ref      …  索引,关联匹配若干行
+	ref         …  索引(前缀)匹配
+	range       …  索引范围扫(BETWEEN、IN、>=、LIKE)得到数据
 	index       …  索引全扫描
 	ALL         …  表全扫描
 
